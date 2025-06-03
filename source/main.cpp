@@ -251,10 +251,10 @@ public:
 
 		list->addItem(clickableListItem2);
 
-		auto *clickableListItem3 = new tsl::elm::ListItem2("Display settings", "\uE151");
+		auto *clickableListItem3 = new tsl::elm::ListItem2("Display settings");
 		clickableListItem3->setClickListener([](u64 keys) { 
 			if (keys & HidNpadButton_A) {
-				tsl::changeTo<WarningDisplayGui>();
+				tsl::changeTo<DisplayGui>();
 				return true;
 			}
 			return false;
@@ -283,8 +283,8 @@ public:
 	DockedAdditionalSettings as = {0};
 	uint8_t selected = 0;
 	float counter = 0;
-	uint8_t AllowedFPSTargets[32] = {15, 20, 25, 30, 35, 40, 45, 50, 55, 60};
-	uint8_t sizeofAllowedFPSTargets = 10;
+	uint8_t AllowedFPSTargets[32] = {60};
+	uint8_t sizeofAllowedFPSTargets = 1;
 	s32 height = 720;
 	uint8_t highestRefreshRate = 60;
 	DockedFPSTargetGui() {
@@ -296,13 +296,13 @@ public:
 		}
 		else if (height == 720) {
 			getDockedHighestRefreshRate(&highestRefreshRate);
-			for (size_t i = 5; i < sizeof(DockedModeRefreshRateAllowed); i++) {
+			for (size_t i = 1; i < sizeof(DockedModeRefreshRateAllowed); i++) {
 				if (DockedModeRefreshRateAllowedValues[i] <= highestRefreshRate) {
 					rr[i] = true;
 				}
 			}
 		}
-		if (height == 720 || height == 1080) for (size_t i = 5; i < sizeof(DockedModeRefreshRateAllowed); i++) {
+		if (height == 720 || height == 1080) for (size_t i = 1; i < sizeof(DockedModeRefreshRateAllowed); i++) {
 			if (rr[i] == true) {
 				AllowedFPSTargets[sizeofAllowedFPSTargets++] = DockedModeRefreshRateAllowedValues[i];
 			}
@@ -376,12 +376,12 @@ public:
 		ommGetDefaultDisplayResolution(&width_impl, &height_impl);
 		if ((height_impl != height)) {
 			height = height_impl;
-			sizeofAllowedFPSTargets = 10;
+			sizeofAllowedFPSTargets = 1;
 			if (height == 1080) {
 				LoadDockedModeAllowedSave(rr, as, nullptr);
 			}
 			else if (height == 720) {
-				for (size_t i = 5; i < sizeof(DockedModeRefreshRateAllowed); i++) {
+				for (size_t i = 1; i < sizeof(DockedModeRefreshRateAllowed); i++) {
 					if (DockedModeRefreshRateAllowedValues[i] <= (uint8_t)std::round(highestRefreshRate)) {
 						rr[i] = true;
 					}
@@ -390,7 +390,7 @@ public:
 			else {
 				return true;
 			}
-			for (size_t i = 5; i < sizeof(DockedModeRefreshRateAllowed); i++) {
+			for (size_t i = 1; i < sizeof(DockedModeRefreshRateAllowed); i++) {
 				if (rr[i] == true) {
 					AllowedFPSTargets[sizeofAllowedFPSTargets++] = DockedModeRefreshRateAllowedValues[i];
 				}
@@ -719,10 +719,10 @@ public:
 		}
 
 		if (SaltySD) {
-			auto *clickableListItem6 = new tsl::elm::ListItem2("Display settings", "\uE151");
+			auto *clickableListItem6 = new tsl::elm::ListItem2("Display settings");
 			clickableListItem6->setClickListener([](u64 keys) { 
 				if (keys & HidNpadButton_A) {
-					tsl::changeTo<WarningDisplayGui>();
+					tsl::changeTo<DisplayGui>();
 					return true;
 				}
 				return false;

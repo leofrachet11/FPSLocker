@@ -42,9 +42,9 @@ APP_VERSION	:=	2.2.0
 
 TARGET		:=	FPSLocker
 BUILD		:=	build
-SOURCES		:=	source source/c4 source/c4/yml source/edid-decode
+SOURCES		:=	source source/c4 source/c4/yml
 DATA		:=	data
-INCLUDES	:=	include libs/libtesla/include source source/edid-decode
+INCLUDES	:=	include libs/libtesla/include source
 
 NO_ICON		:=  1
 
@@ -53,7 +53,7 @@ NO_ICON		:=  1
 #---------------------------------------------------------------------------------
 ARCH		:= -march=armv8-a+crc+crypto -mtune=cortex-a57 -mtp=soft -fPIE
 
-CFLAGS		:= -g -Wall -Os -ffunction-sections \
+CFLAGS		:= -g -Wall -O3 -ffunction-sections \
 			$(ARCH) $(DEFINES)
 
 CFLAGS		+= $(INCLUDE) -D__SWITCH__ -DAPP_VERSION="\"$(APP_VERSION)\"" -DNDEBUG
